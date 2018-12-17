@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\ThirdPartyApplication;
 use App\Support\DateTimeFormatter;
 use Carbon\Carbon;
+use Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -20,13 +21,18 @@ class SessionController extends Controller
 
     public function index()
     {
+
+        Debugbar::startMeasure('days','Time for getting days data');
+
+        $days = Session::orderBy('started_at', 'desc')
+            ->with(['task.project.client', 'invoice', 'thirdPartyApplicationSessions'])
+            ->groupBy('started_at')
+            ->get();
+
+        Debugbar::stopMeasure('days');
+
         return view('session.index', [
-            'days' => Session::orderBy('started_at', 'desc')
-                ->with(['task.project.client', 'invoice', 'thirdPartyApplicationSessions'])
-                ->get()
-                ->groupBy(function ($session) {
-                    return $session->localStartedAt->format('Y-m-d');
-                }),
+            'days' => $days,
             'thirdPartyApplications' => ThirdPartyApplication::all(),
         ]);
     }
