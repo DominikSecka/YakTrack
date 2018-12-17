@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Davibennun\LaravelRaygun\Facades\Raygun;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,6 +35,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        Raygun::SendException($e);
+
         parent::report($e);
     }
 

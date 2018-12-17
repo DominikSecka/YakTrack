@@ -180,6 +180,16 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Stevebauman\Active\ActiveServiceProvider::class,
         Spatie\BladeJavaScript\BladeJavaScriptServiceProvider::class,
+
+        /*
+         * Raygun Provider
+         */
+        Davibennun\LaravelRaygun\LaravelRaygunServiceProvider::class,
+
+        /*
+         * Debugbar
+         */
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -226,5 +236,7 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
+        'Raygun'       => Davibennun\LaravelRaygun\Facades\Raygun::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 ];
